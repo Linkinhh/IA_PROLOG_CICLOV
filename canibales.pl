@@ -24,7 +24,7 @@
 % 	Regresa caníbal: (0,2,3,1,0)
 % 	Lleva 2 caníbales: (0,0,3,3,1)
 
-sol(A,V):- siguiente(e(3,2,0,1,0), [e(3,2,0,1,0), e(3,1,0,2,1), e(3,3,0,0,0)], V, [], A).
+sol(A,V):- siguiente(e(0,0,0,0,0), [e(0,0,0,0,0)], V, [], A).
 
 %Verifica si es estado final
 siguiente(e(0,0,3,3,1),V,V,A,A):- !.
