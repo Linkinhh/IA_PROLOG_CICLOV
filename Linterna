@@ -1,0 +1,47 @@
+solucion(A,V):- sgte(e(0,0,0,0,0,300),[e(0,0,0,0,0,300)],V,[],A).
+%condicion(e(_,_,_,_,_,Tiempo)):- Tiempo > 0.
+sgte(e(1,1,1,1,1,_),V,V,A,A):- !.
+
+sgte(e(P1,P2,P3,P4,P5,Tiempo),Lv,V,La,A):-
+accion(e(P1,P2,P3,P4,P5,Tiempo),e(P1S,P2S,P3S,P4S,P5S,T),Acc),
+not(pertenece(e(P1S,P2S,P3S,P4S,P5S,Tiempo),Lv)),
+Tiempo > 0,
+%not(muro(e(P1S,P2S,P3S,P4S,P5S,Tiempo))),
+sgte(e(P1,P2,P3,P4,P5,T),[e(P1S,P2S,P3S,P4S,P5S,T)|Lv],V,[Acc|La],A).
+
+pertenece(X,[X|_]).
+pertenece(X,[_|R]) :- pertenece(X,R).
+
+%Persona 1 -> 10
+%Persona 2 -> 30
+%Persona 3 -> 60
+%Persona 4 -> 80
+%Persona 5 -> 120
+
+%Van
+accion(e(0,0,P3,P4,P5,Tiempo),e(1,1,P3,P4,P5,Ti),'Van persona 1 y 2'):- Ti is Tiempo - 30.
+accion(e(0,P2,0,P4,P5,Tiempo),e(1,P2,1,P4,P5,Ti),'Van persona 1 y 3'):- Ti is Tiempo - 60.
+accion(e(0,P2,P3,0,P5,Tiempo),e(1,P2,P3,1,P5,Ti),'Van persona 1 y 4'):- Ti is Tiempo - 80.
+accion(e(0,P2,P3,P4,0,Tiempo),e(1,P2,P3,P4,1,Ti),'Van persona 1 y 5'):- Ti is Tiempo - 120.
+accion(e(1,P2,P3,P4,P5,Tiempo),e(0,P2,P3,P4,P5,Ti),'Regresa 1'):- Ti is Tiempo - 10.
+
+accion(e(P1,0,0,P4,P5,Tiempo),e(P1,1,1,P4,P5,Ti),'Van persona 2 y 3'):- Ti is Tiempo - 60.
+accion(e(P1,0,P3,0,P5,Tiempo),e(P1,1,P3,1,P5,Ti),'Van persona 2 y 4'):- Ti is Tiempo - 80.
+accion(e(P1,0,P3,P4,0,Tiempo),e(P1,1,P3,P4,1,Ti),'Van persona 2 y 5'):- Ti is Tiempo - 120.
+accion(e(P1,1,P3,P4,P5,Tiempo),e(P1,0,P3,P4,P5,Ti),'Regresa 2'):- Ti is Tiempo - 30.
+
+accion(e(P1,P2,0,0,P5,Tiempo),e(P1,P2,1,1,P5,Ti),'Van persona 3 y 4'):- Ti is Tiempo - 80.
+accion(e(P1,P2,0,P4,0,Tiempo),e(P1,P2,1,P4,1,Ti),'Van persona 3 y 5'):- Ti is Tiempo - 120.
+accion(e(P1,P2,1,P4,P5,Tiempo),e(P1,P2,0,P4,P5,Ti),'Regresa 3'):- Ti is Tiempo - 60.
+
+accion(e(P1,P2,P3,0,0,Tiempo),e(P1,P2,P3,1,1,Ti),'Van persona 4 y 5'):- Ti is Tiempo - 120.
+accion(e(P1,P2,P3,1,P5,Tiempo),e(P1,P2,P3,0,P5,Ti),'Regresa 4'):- Ti is Tiempo - 80.
+
+accion(e(P1,P2,P3,P4,1,Tiempo),e(P1,P2,P3,P4,0,Ti),'Regresa 5'):- Ti is Tiempo - 120.
+
+
+
+%muro(e(0,1,1,_)).
+%muro(e(1,0,0,_)).
+%muro(e(0,_,1,1)).
+%muro(e(1,_,0,0)).
